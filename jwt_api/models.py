@@ -5,7 +5,7 @@ from django.db import models
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None):
-        """  create and return user with username, email, password  """
+        """ create and return user with username, email, password """
         if username is None:
             raise TypeError('Пользователь должен содержать username')
 
@@ -35,7 +35,7 @@ class User(AbstractUser, PermissionsMixin):
     name = models.CharField(max_length=255, db_index=True, unique=True)
     email = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
-    # если хотим сохранить в refresh_token в бд:
+    # если хотим сохранить refresh_token в бд:
     # refresh = models.CharField(max_length=512, unique=True, default=None)
 
     username = None

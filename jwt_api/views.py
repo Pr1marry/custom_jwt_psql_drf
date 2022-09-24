@@ -41,6 +41,34 @@ class TokensAPIView(APIView):
         return response
 
 
+class LoginAPIView(APIView):
+    def post(self, request):
+        user = User.objects.filter(email=request.data['email']).first()
+
+        if not user:
+            raise APIException('Несуществующий пользователь')
+
+        if not user.check_password(request.data['password']):
+            raise APIException('Неправильный пароль')
+
+        access_token = create_access_token(user.id)
+        refresh_token = create_refresh_token(user.id)
+
+        # сохранение в бд refresh_token:
+        # user.refresh = refresh_token
+        # user.save()
+
+        response = Response()
+
+        response.set_cookie(key='refreshToken', value=refresh_token, httponly=True)
+        response.data = {
+            'token': access_token,
+            # 'r_token': refresh_token
+        }
+
+        return response
+
+
 class RefreshAPIAccessView(APIView):
     def post(self, request):
         refresh_token = request.COOKIES.get('refreshToken')
