@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     #custom_apps
     #auth
     'jwt_api',
+    #openapi
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
