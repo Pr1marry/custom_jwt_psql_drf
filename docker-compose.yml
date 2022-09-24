@@ -22,7 +22,7 @@ services:
     depends_on:
       - db
   web:
-    container_name: Api
+    container_name: Api_jwt
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
